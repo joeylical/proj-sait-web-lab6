@@ -1,4 +1,6 @@
-/****************** YOUR NAME: 
+/* jshint esversion: 6 */
+
+/****************** YOUR NAME: Jiayi Li
 
 The instructions describe the missing logic that is needed; you will translate these into JavaScript in the places indicated.
 
@@ -11,9 +13,8 @@ You are encouraged to use the provided naming convention for ease of review.
 
 // INSERT YOUR CODE HERE
 
-
-
-
+let modelName = 'XYZ';
+let duration = 0;
 
 /****************** helper function ******************/
 /* create a function called recalculate() which will
@@ -27,10 +28,21 @@ You are encouraged to use the provided naming convention for ease of review.
 
 // INSERT YOUR CODE HERE
 
+function recalculate() {
+    let cost;
 
+    if (modelName === 'XYZ') {
+        cost = duration * 100;
+    } else if (modelName === 'CPRG') {
+        cost = duration * 213;
+    } else {
+        console.error('bad modelName: ' + modelName);
+        return;
+    }
 
-
-
+    let costLabel = document.getElementById('calculated-cost');
+    costLabel.innerHTML = `${cost}`;
+}
 
 /****************** model button logic ******************/
 
@@ -46,11 +58,21 @@ You are encouraged to use the provided naming convention for ease of review.
 
 // INSERT YOUR CODE HERE
 
+let switchModel = document.getElementById('model-button');
+function changeModel() {
+    let modelText = document.getElementById('model-text');
+    if (modelName === 'XYZ') {
+        modelName = 'CPRG';
+    } else if (modelName === 'CPRG') {
+        modelName = 'XYZ';
+    } else {
+        modelName = 'XYZ';
+    }
+    modelText.innerHTML = `Model ${modelName}`;
+    recalculate();
+}
 
-
-
-
-
+switchModel.addEventListener('click', changeModel);
 
 /****************** duration button logic ******************/
 /*  - first, create a variable to represent the "Change Duration" pseudo-button.
@@ -65,5 +87,20 @@ You are encouraged to use the provided naming convention for ease of review.
 
 // INSERT YOUR CODE HERE
 
+let chgDuration = document.getElementById('duration-button');
+function changeDuration() {
+    let duraText = document.getElementById('duration-text');
+    let newduration = prompt('Input duration', duration);
+    if (newduration === null) {
+        return;
+    }
+    if (!/\d+/.test(newduration)) {
+        alert(`"${newduration}" is not a number!`);
+        return;
+    }
+    duration = parseInt(newduration);
+    duraText.innerHTML = newduration;
+    recalculate();
+}
 
-
+chgDuration.addEventListener('click', changeDuration);
